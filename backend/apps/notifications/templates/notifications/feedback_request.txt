@@ -1,0 +1,9 @@
+Hi {{ reviewer_name }},
+
+{{ requester_name }} has asked you to provide {{ relationship }} feedback for
+{{ subject_name }} as part of the "{{ cycle_name }}" review cycle.
+
+Please accept or decline this request in the Performance & OKR Platform.
+
+Thanks,
+Performance & OKR Platform

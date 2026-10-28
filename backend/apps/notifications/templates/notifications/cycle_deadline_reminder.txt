@@ -1,0 +1,11 @@
+Hi {{ user_name }},
+
+The "{{ cycle_name }}" review cycle is in its "{{ cycle_status }}" stage and
+ends on {{ end_date }}. You still have outstanding action items:
+{% for item in pending_items %}
+  - {{ item }}
+{% endfor %}
+Please complete them before the deadline.
+
+Thanks,
+Performance & OKR Platform
