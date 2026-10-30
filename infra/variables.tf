@@ -1,40 +1,20 @@
-variable "resource_group_name" {
-  description = "Name of the Azure Resource Group that hosts all platform resources."
+variable "vnet_id" {
+  description = "ID of the one shared, VNet-integrated Container Apps Environment's virtual network."
   type        = string
 }
 
-variable "location" {
-  description = "Primary Azure region for the resource group (e.g. eastus2)."
+variable "subnet_id" {
+  description = "ID of the subnet private endpoints attach to, inside the shared VNet."
   type        = string
-  default     = "eastus2"
 }
 
-variable "postgres_admin_login" {
-  description = "Administrator login name for the PostgreSQL Flexible Server."
+variable "hub_resource_group" {
+  description = "Resource group holding the privatelink DNS zones every app shares. Harbour creates the zones before this runs; this config only links its own VNet into them."
   type        = string
-  sensitive   = true
 }
 
-variable "postgres_admin_password" {
-  description = "Administrator password for the PostgreSQL Flexible Server."
+variable "mysql_subnet_id" {
+  description = "ID of the subnet delegated to Microsoft.DBforMySQL/flexibleServers, inside the shared VNet. Only MySQL uses it."
   type        = string
-  sensitive   = true
-}
-
-variable "postgres_sku_name" {
-  description = "SKU name for the PostgreSQL Flexible Server (e.g. GP_Standard_D2s_v3)."
-  type        = string
-  default     = "GP_Standard_D2s_v3"
-}
-
-variable "postgres_version" {
-  description = "PostgreSQL major version."
-  type        = string
-  default     = "16"
-}
-
-variable "tags" {
-  description = "Map of tags applied to all resources."
-  type        = map(string)
-  default     = {}
+  default     = ""
 }
