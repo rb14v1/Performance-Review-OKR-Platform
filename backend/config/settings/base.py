@@ -94,7 +94,7 @@ else:
             "ENGINE": "django.db.backends.postgresql",
             "NAME": config("POSTGRES_DB", default="perf_okr_platform"),
             "USER": config("POSTGRES_USER", default="perf_okr_platform"),
-            "PASSWORD": config("POSTGRES_PASSWORD", default="perf_okr_platform"),
+            "PASSWORD": config("POSTGRES_PASSWORD"),  # required when not using SQLite
             "HOST": config("POSTGRES_HOST", default="localhost"),
             "PORT": config("POSTGRES_PORT", default="5432"),
         }
