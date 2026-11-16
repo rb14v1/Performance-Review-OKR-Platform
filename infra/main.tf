@@ -21,8 +21,9 @@ provider "azurerm" {
 
 
 resource "azurerm_postgresql_flexible_server" "postgresql" {
-  name                   = "psql-performence-test-5"
-  resource_group_name    = "performence-test-5"
+  tags = var.common_tags
+  name                   = "psql-performance-review"
+  resource_group_name    = "performance-review"
   location               = "uksouth"
   version                = "16"
   sku_name               = "B_Standard_B1ms"
@@ -30,10 +31,8 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
   administrator_login    = "psqladmin"
   administrator_password = random_password.postgresql_admin.result
   public_network_access_enabled = false
-
-  # Automated backups: 30-day retention (PITR window) with geo-redundant storage
-  backup_retention_days        = 30
-  geo_redundant_backup_enabled = true
+  backup_retention_days         = 35
+  geo_redundant_backup_enabled  = true
 
   # Azure assigns an availability zone on creation since none is declared here — a later apply
   # then sees that as drift and tries to reset it, which the provider rejects outright:
@@ -58,15 +57,17 @@ data "azurerm_private_dns_zone" "postgresql_dns_zone" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "postgresql_dns_zone_link" {
-  name                  = "link-performence-test-5"
+  tags = var.common_tags
+  name                  = "link-performance-review"
   resource_group_name   = var.hub_resource_group
   private_dns_zone_name = data.azurerm_private_dns_zone.postgresql_dns_zone.name
   virtual_network_id    = var.vnet_id
 }
 
 resource "azurerm_private_endpoint" "postgresql_pe" {
-  name                = "pe-psql-performence-test-5"
-  resource_group_name = "performence-test-5"
+  tags = var.common_tags
+  name                = "pe-psql-performance-review"
+  resource_group_name = "performance-review"
   location            = "uksouth"
   subnet_id           = var.subnet_id
 
@@ -84,8 +85,9 @@ resource "azurerm_private_endpoint" "postgresql_pe" {
 }
 
 resource "azurerm_redis_cache" "redis" {
-  name                = "redis-performence-test-5"
-  resource_group_name = "performence-test-5"
+  tags = var.common_tags
+  name                = "redis-performance-review"
+  resource_group_name = "performance-review"
   location            = "uksouth"
   capacity            = 0
   family              = "C"
@@ -101,15 +103,17 @@ data "azurerm_private_dns_zone" "redis_dns_zone" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "redis_dns_zone_link" {
-  name                  = "link-performence-test-5"
+  tags = var.common_tags
+  name                  = "link-performance-review"
   resource_group_name   = var.hub_resource_group
   private_dns_zone_name = data.azurerm_private_dns_zone.redis_dns_zone.name
   virtual_network_id    = var.vnet_id
 }
 
 resource "azurerm_private_endpoint" "redis_pe" {
-  name                = "pe-redis-performence-test-5"
-  resource_group_name = "performence-test-5"
+  tags = var.common_tags
+  name                = "pe-redis-performance-review"
+  resource_group_name = "performance-review"
   location            = "uksouth"
   subnet_id           = var.subnet_id
 
