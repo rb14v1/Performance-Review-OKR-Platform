@@ -31,6 +31,10 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
   administrator_password = random_password.postgresql_admin.result
   public_network_access_enabled = false
 
+  # Automated backups: 30-day retention (PITR window) with geo-redundant storage
+  backup_retention_days        = 30
+  geo_redundant_backup_enabled = true
+
   # Azure assigns an availability zone on creation since none is declared here — a later apply
   # then sees that as drift and tries to reset it, which the provider rejects outright:
   # "zone can only be changed when exchanged with the zone specified in
